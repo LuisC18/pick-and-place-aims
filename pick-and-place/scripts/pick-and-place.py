@@ -16,8 +16,17 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 #from robot_support import moveManipulator
 from any_position_grasp import *
+
+def callback(data):
+    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+def listener():
+    rospy.init_node('listener',anonymous=True)
+    rospy.Subscriber('positionData',String, callback)
+    rospy.spin()
 def main():
   try:
+    listener()
     #set velocity of motion
     rc = moveManipulator('bot_mh5l')
     rc.set_vel(0.1)
