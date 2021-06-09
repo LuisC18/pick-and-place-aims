@@ -1,0 +1,13 @@
+<launch>
+
+	<include file="$(find motoman_mh5l_moveit_config)/launch/moveit_planning_execution.launch" >
+    <arg name="sim" default="false" />
+    <arg name="robot_ip" unless="$(arg sim)" default="192.168.1.200" />
+    <arg name="controller" unless="$(arg sim)" default="fs100" />
+  </include>
+
+  <!-- <include file="$(find aims_environment)/launch/load_table_mh5.launch" /> -->
+
+  <node pkg="rosservice" type="rosservice" name="robot_enable" args="call --wait /robot_enable"/>
+
+</launch>

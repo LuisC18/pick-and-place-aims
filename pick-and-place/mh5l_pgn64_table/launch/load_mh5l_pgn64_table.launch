@@ -1,0 +1,3 @@
+<launch>
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mh5l_pgn64_table)/urdf/mh5l_pgn64_table.xacro'" />
+</launch>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>aims_environment</name>
+  <version>0.1.0</version>
+  <description>
+    <p>
+        OSU AIMS Lab - Physical Environment Configuration
+    </p>
+    <p>
+        This package contains configuration data and launch files
+        for the physical environment in the AIMS Lab @ Ohio State.
+      </p>
+    <p>
+        All urdfs are based on emperically measured locations provided by acbuynak and hansen95.
+    </p>
+    <p>
+        Before using any of the configuration files and / or meshes included
+        in this package, be sure to check they are correct for the particular
+        robot model(s) and configuration you intend to use them with.
+      </p>
+  </description>
+
+  <!-- META DATA -->
+  <license>BSD-Clause 4</license>
+  <author email="acbuynak@gmail.com">acbuynak</author>
+  <maintainer email="acbuynak@gmail.com">acbuynak</maintainer>
+
+  <!-- DEPENDENCIES -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- PACKAGE IS NOT ARCHITECTURE-SPECIFIC ONCE COMPILED-->
+  <export>
+    <architecture_independent/>
+  </export>
+</package>

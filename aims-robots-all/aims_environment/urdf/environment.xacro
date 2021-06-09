@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<robot name="aims_environment" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:include filename="$(find aims_environment)/urdf/environment_macro.xacro" />
+	<xacro:aims_environment prefix=""/>
+
+  <link name="origin_global">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.01" radius="2.5" />
+      </geometry>
+      <material name="global_white"/>
+    </visual>
+  </link>
+
+</robot>

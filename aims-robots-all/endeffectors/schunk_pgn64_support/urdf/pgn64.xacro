@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+
+<robot name="eef_schunk_pgn64" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find schunk_pgn64_support)/urdf/pgn64_macro.xacro" />
+    <xacro:schunk_pgn64 prefix=""/>
+
+</robot>

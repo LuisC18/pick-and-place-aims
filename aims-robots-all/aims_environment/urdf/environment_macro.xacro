@@ -1,0 +1,188 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:macro name="aims_environment" params="prefix">
+
+  <!-- Link List -->
+  <link  name="${prefix}mount_r1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/visual/base_r1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/collision/base_r1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}mount_r2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/visual/base_r2.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/collision/base_r2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}mount_r3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/visual/base_r3.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/bases/collision/base_r3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}picktable_r3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/pickTable_r3_visual.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/pickTable_r3_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link  name="${prefix}controllerboxes">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/dx200_controller_boxes.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/dx200_controller_boxes.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}tormach">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/tormach1100/tormach1100_visual.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/tormach1100/tormach1100_collision_rough.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}cognex">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/cognex_ceiling_assembly.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/cognex_ceiling_assembly.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}lincoln_welder">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/lincoln_welder_rough.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/lincoln_welder_rough.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link  name="${prefix}mh5_worktable">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/mh5_worktable/mh5_worktable_visual.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/mh5_worktable/mh5_worktable_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+
+
+  <!-- Joint List -->
+  <joint name="${prefix}r1_pedestal_origin" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="origin_global" />
+    <child link="${prefix}mount_r1" />
+  </joint>
+  <joint name="${prefix}r2_pedestal_origin" type="fixed">
+    <origin xyz="0.733 -2.4281 0" rpy="0 0 0" />
+    <parent link="origin_global" />
+    <child link="${prefix}mount_r2" />
+  </joint>
+  <joint name="${prefix}r3_pedestal_origin" type="fixed">
+    <origin xyz="2.03805 -0.66105 0" rpy="0 0 0" />
+    <parent link="origin_global" />
+    <child link="${prefix}mount_r3" />
+  </joint>
+
+
+  <joint name="${prefix}picktable_r3" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="${prefix}mount_r3" />
+    <child link="${prefix}picktable_r3" />
+  </joint>
+  <joint name="${prefix}mh5_worktable_orign" type="fixed">
+    <origin xyz="3.9331 -4.6790 0.869" rpy="0 0 ${radians(90)}"/>
+    <parent link="origin_global" />
+    <child link="${prefix}mh5_worktable" />
+  </joint>
+
+
+  <joint name="${prefix}controllerboxes_origin" type="fixed">
+    <origin xyz="-1.3970 -0.7239 0" rpy="0 0 0"/>
+    <parent link="origin_global" />
+    <child link="${prefix}controllerboxes" />
+  </joint>
+  <joint name="${prefix}tormach_origin" type="fixed">
+    <origin xyz="0.3395 -4.9935 0" rpy="0 0 0"/>
+    <parent link="origin_global" />
+    <child link="${prefix}tormach" />
+  </joint>
+  <joint name="${prefix}cognex_origin" type="fixed">
+    <origin xyz="1 -0.7 3.2" rpy="0 0 ${radians(180)}"/>
+    <parent link="origin_global" />
+    <child link="${prefix}cognex" />
+  </joint>
+  <joint name="${prefix}welder_origin" type="fixed">
+    <origin xyz="-1.7 -0.3175 0" rpy="0 0 0"/>
+    <parent link="origin_global" />
+    <child link="${prefix}lincoln_welder" />
+  </joint>
+
+</xacro:macro>
+</robot>

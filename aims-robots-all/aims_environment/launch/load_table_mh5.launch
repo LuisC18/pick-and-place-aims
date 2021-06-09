@@ -1,0 +1,3 @@
+<launch>
+	<param name="environment_table" command="$(find xacro)/xacro --inorder '$(find aims_environment)/urdf/table_mh5.xacro'" />
+</launch>

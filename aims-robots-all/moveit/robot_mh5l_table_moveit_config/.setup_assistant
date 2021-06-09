@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: mh5l_table
+    relative_path: urdf/mh5l_table.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/motoman_mh5l.srdf
+  CONFIG:
+    author_name: acbuynak
+    author_email: acbuynak@gmail.com
+    generated_timestamp: 1618961452

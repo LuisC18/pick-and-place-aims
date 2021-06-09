@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>schunk_pgn64_support</name>
+  <version>0.1.0</version>
+  <description>
+    <p>ROS-Industrial Support Package for the Schunk PGN-plus 64-1 Gripper</p>
+    <p>
+      This package contains configuration data, 3D models and launch files
+      for parallel grippers designed to be appended to the MH5 robot.
+    </p>
+    <p>
+      <b>Compatible Robots</b>
+    </p>
+    <ul>
+      <li>MH5 - Default Config</li>
+    </ul>
+    <p>
+      Before using any of the configuration files and / or meshes included
+      in this package, be sure to check they are correct for the particular
+      robot model and configuration you intend to use them with.
+    </p>
+  </description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="acbuynak@gmail.com">acbuynak</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <license>TODO</license>
+
+
+  <!-- Url tags -->
+  <url type="website">https://github.com/osu-aims/aims-robots-all</url> -->
+
+
+  <!-- Author tags -->
+  <!-- Authors do not have to be maintainers, but could be -->
+  <author email="acbuynak@gmail.com">acbuynak</author>
+
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>motoman_driver</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

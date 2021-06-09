@@ -1,0 +1,11 @@
+<launch>
+
+	<include file="$(find cluster_r123_moveit_config)/launch/moveit_planning_execution.launch" >
+    <arg name="sim" default="false" />
+    <arg name="robot_ip" unless="$(arg sim)" default="192.168.1.110" />
+    <arg name="controller" unless="$(arg sim)" default="dx200" />
+  </include>
+
+  <node pkg="rosservice" type="rosservice" name="robot_enable" args="call --wait /robot_enable"/>
+
+</launch>

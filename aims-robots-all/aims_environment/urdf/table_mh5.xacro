@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<robot name="aims_environment" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="origin_global">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.01" radius="0.2" />
+      </geometry>
+      <material>
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <link  name="mh5_worktable">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/mh5_worktable/mh5_worktable_visual.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aims_environment/meshes/mh5_worktable/mh5_worktable_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="mh5_worktable_orign" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 ${radians(90)}"/>
+    <parent link="base_link" />
+    <child link="mh5_worktable" />
+  </joint>
+
+</robot>

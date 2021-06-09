@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="pfx" default=""/>
+
+  <!-- GAZEBO COLORING -->
+  <gazebo reference="$(arg pfx)tool0">
+    <material>Gazebo/Gray</material>
+  </gazebo>
+
+</robot>
