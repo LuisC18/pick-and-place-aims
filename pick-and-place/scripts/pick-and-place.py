@@ -7,26 +7,51 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 from math import pi, radians
-from std_msgs.msg import String
+from std_msgs.msg import *
 from moveit_commander.conversions import pose_to_list
 from motoman_msgs.srv import ReadSingleIO, WriteSingleIO
+from geometry_msgs.msg import Pose
 
 ## Quaternion Tools
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 #from robot_support import moveManipulator
-from any_position_grasp import *
+from robot_support import *
 
+x = 0
+y = 0
+z = 0
 def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-
+    #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    # global a 
+    global x
+    global y
+    global z
+    
+    x = data.position.x
+    y = data.position.y
+    # a = data.position.x
+    # b = data.position.y
+    z = data.orientation.z
+    
+    
 def listener():
-    rospy.init_node('listener',anonymous=True)
-    rospy.Subscriber('positionData',String, callback)
+    from geometry_msgs.msg import Pose
+    rospy.init_node('node_listener',anonymous=True)
+    rospy.Subscriber('cameraPose',Pose, callback)
+    
     rospy.spin()
+
 def main():
   try:
+   
+   ######
     listener()
+    print(x)
+    # print('x position:', a)
+    # print('y-position:',b)
+    # print('z-orientation:',c)
+    
     #set velocity of motion
     rc = moveManipulator('bot_mh5l')
     rc.set_vel(0.1)

@@ -6,6 +6,7 @@ import math
 import cv2
 import rospy
 from std_msgs.msg import *
+import geometry_msgs.msg 
 
 # Configure depth and color streams
 pipeline = rs.pipeline()
@@ -187,30 +188,27 @@ try:
         #         rate.sleep()
 
         def talker():
-            pub = rospy.Publisher('Coordinates/Angle', Float64, queue_size=10)
+            #pub = rospy.Publisher('Coordinates/Angle',Pose, queue_size=10)
             # is float64 right for Python 2.7? 
-            rospy.init_node('Camera')
+            from geometry_msgs.msg import Pose
             print('Initialized Node')
+            pub = rospy.Publisher('cameraPose',Pose, queue_size=10) #TODO: couldn't get latch=True to work. Looping instead
+            rospy.init_node('cameraPose', anonymous=False)
+            rate = rospy.Rate(1) # 10hz
 
-            # publist = Float64()
-            # a = [pub_angle,xC,yC] # storing variables in array
-            # publist.data=list(a)
-            # print('Made list into publist data')
-            # rospy.loginfo(publist.data)
-            # print(publist.data)
-            # pub.publish(publist.data)
+            pose_goal = geometry_msgs.msg.Pose()
+            pose_goal.position.x = xC
+            pose_goal.position.y = yC
+            pose_goal.orientation.z = pub_angle
 
-            # print('Published publlist')
-            rospy.sleep(5)
-            pub.publish(pub_angle)
-            rospy.sleep(5)
-            pub.publish(xC)
-            rospy.sleep(5)
-            pub.publish(yC)
-            rospy.spin()
-            rospy.sleep(10)
-          
+    
+            # Publish node
+            while not rospy.is_shutdown():
+                #rospy.loginfo(message)
+                pub.publish(pose_goal)
+                rate.sleep()
 
+         
 
         # Wait for a coherent pair of frames: depth and color
         frames = pipeline.wait_for_frames()
@@ -297,13 +295,8 @@ try:
                             print('Angle is ' + str(result_angle) + ' degrees [CCW Positive]')
                             print('Coordinate of center is (' + str(xC) + ' , ' + str(yC) + ') cm')
                             pub_angle = int(np.rad2deg(result_angle))
-                            #talker()
-                            a = [xC,yC,pub_angle]
-                            np.savetxt('Coordinate-angle.txt', zip(a), fmt="%5.2f")
-                           
-
-                            #file.write(str(xC)+ '/n'+str(yC)+ '/n'+str(pub_angle))
-                            print('wrote to file')
+                            talker()
+                            #rospy.sleep(5)
                             loop=False
                             
         #camera_node()
