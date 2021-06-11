@@ -6,12 +6,13 @@ import math
 import cv2
 import rospy
 from std_msgs.msg import *
+import geometry_msgs.msg 
 
 class detectRect(object):
   def __init__(self):
-    super(anyPosition,self).__init__()
+    super(detectRect,self).__init__()
     rospy.init_node('node_detectRectangle',anonymous=True)
-    
+    from geometry_msgs.msg import Pose
     self.sendPosOrient= rospy.Publisher('Coordinates/Angle', Pose, queue_size=10)
     self.pipeline = rs.pipeline()
     self.config = rs.config()
@@ -57,13 +58,13 @@ class detectRect(object):
         countY = countY + 1
       if (angleList[j] >= (angleList[j+1] - 3) and angleList[j] <= (angleList[j+1] + 3)):
         countA = countA + 1
-        j = j + 1
-      if (countX == 20 & countY == 20 & countA == 20):
-        same = True
-        return same
-      else:
-        same = False
-        return same
+      j = j + 1
+    if (countX == 20 & countY == 20 & countA == 20):
+      same = True
+      return same
+    else:
+      same = False
+      return same
 
     # Reorders the four points of the rectangle
   def reorder(self,points):
@@ -83,7 +84,7 @@ class detectRect(object):
   # Warps the Image
   def warpImg(self,img, points, wP, hP):
     pad = 20
-    points = reorder(points)
+    points = self.reorder(points)
     pts1 = np.float32(points)
     pts2 = np.float32([[0, 0], [wP, 0], [0, hP], [wP, hP]])
     matrix = cv2.getPerspectiveTransform(pts1, pts2)
@@ -129,8 +130,8 @@ class detectRect(object):
     sz = len(pts)
     data_pts = np.empty((sz, 2), dtype=np.float64)
     for i in range(data_pts.shape[0]):
-        data_pts[i, 0] = pts[i, 0, 0]
-        data_pts[i, 1] = pts[i, 0, 1]
+      data_pts[i, 0] = pts[i, 0, 0]
+      data_pts[i, 1] = pts[i, 0, 1]
 
     # Performs PCA analysis
     mean = np.empty((0))
@@ -144,8 +145,8 @@ class detectRect(object):
           cntr[1] + 0.02 * eigenvectors[0, 1] * eigenvalues[0, 0])
     p2 = (cntr[0] - 0.02 * eigenvectors[1, 0] * eigenvalues[1, 0],
           cntr[1] - 0.02 * eigenvectors[1, 1] * eigenvalues[1, 0])
-    drawAxis(img, cntr, p1, (255, 255, 0), 1)
-    drawAxis(img, cntr, p2, (0, 0, 255), 5)
+    self.drawAxis(img, cntr, p1, (255, 255, 0), 1)
+    self.drawAxis(img, cntr, p2, (0, 0, 255), 5)
     angle = math.atan2(eigenvectors[0, 1], eigenvectors[0, 0])  # orientation in radians
     return angle, cntr, mean
 
@@ -153,10 +154,10 @@ class detectRect(object):
   def getContours(self,img, imgContour, minArea, filter):
     cThr = [100, 100]
     try:
-        imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        imgBlur = cv2.GaussianBlur(imgGray, (5, 5), 1)
+      imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+      imgBlur = cv2.GaussianBlur(imgGray, (5, 5), 1)
     except:
-        imgBlur = cv2.GaussianBlur(img,(5,5),1)
+      imgBlur = cv2.GaussianBlur(img,(5,5),1)
     imgCanny = cv2.Canny(imgBlur, cThr[0], cThr[1])
     kernel = np.ones((5, 5))
     imgDilate = cv2.dilate(imgCanny, kernel, iterations=3)
@@ -166,18 +167,18 @@ class detectRect(object):
     approxList = []
     bboxList = []
     for i in contours:
-        area = cv2.contourArea(i)
-        if area > minArea:
-            cv2.drawContours(imgContour, contours, 0, (255, 0, 0), 3)
-            peri = cv2.arcLength(i, True)
-            approx = cv2.approxPolyDP(i, 0.02 * peri, True)
-            bbox = cv2.boundingRect(approx)
-            if len(approx) == filter:
-                areaList.append(area)
-                approxList.append(approx)
-                bboxList.append(bbox)
+      area = cv2.contourArea(i)
+      if area > minArea:
+        cv2.drawContours(imgContour, contours, 0, (255, 0, 0), 3)
+        peri = cv2.arcLength(i, True)
+        approx = cv2.approxPolyDP(i, 0.02 * peri, True)
+        bbox = cv2.boundingRect(approx)
+        if len(approx) == filter:
+          areaList.append(area)
+          approxList.append(approx)
+          bboxList.append(bbox)
     if len(areaList) != 0:
-        areaList= sorted(areaList, reverse=True)
+      areaList= sorted(areaList, reverse=True)
     return areaList, approxList, bboxList
   def talker():
     #pub = rospy.Publisher('Coordinates/Angle',Pose, queue_size=10)
