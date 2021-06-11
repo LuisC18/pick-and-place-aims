@@ -18,15 +18,9 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 #from robot_support import moveManipulator
 from robot_support import *
 
-x = 0
-y = 0
-z = 0
 def callback(data):
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
     # global a 
-    global x
-    global y
-    global z
     
     x = data.position.x
     y = data.position.y
@@ -36,18 +30,32 @@ def callback(data):
     
     
 def listener():
-    from geometry_msgs.msg import Pose
-    rospy.init_node('node_listener',anonymous=True)
-    rospy.Subscriber('cameraPose',Pose, callback)
-    
-    rospy.spin()
+    with open("/home/martinez737/ws_pick_camera/src/pick-and-place/scripts/Coordinate-angle.txt", "r") as f:
+        file_content = f.read()
+        fileList = file_content.splitlines()
+        xC = float(fileList[0])/100
+        yC = float(fileList[1])/100
+
+        pose_goal = [0,0,0,0,0,0]
+        pose_goal[0] = xC-0.1
+        pose_goal[1] = yC+0.5
+        pose_goal[2] = 0.2
+
+        x_angle = radians(-180)
+        y_angle = radians(45)
+        z_angle = radians(float(fileList[2])-45)
+
+        pose_goal[3]=x_angle
+        pose_goal[4]=y_angle
+        pose_goal[5]=z_angle
+        return pose_goal
 
 def main():
   try:
    
    ######
-    listener()
-    print(x)
+    pose_goal = listener()
+    print(pose_goal)
     # print('x position:', a)
     # print('y-position:',b)
     # print('z-orientation:',c)
@@ -58,9 +66,9 @@ def main():
     rc.set_accel(0.1)
 
     #starting position and open gripper
-    raw_input('Go to All Zeroes <enter>')
-    rc.goto_all_zeros()
-    rc.send_io(0)
+    # raw_input('Go to All Zeroes <enter>')
+    # rc.goto_all_zeros()
+    # rc.send_io(0)
 
     #for simulation
     #raw_input('Add cube <enter>')
@@ -70,27 +78,27 @@ def main():
 
     # move to object position
     # pose [pos: x, y, z, axes:x y z w]
-    pose_lower = [0,0.6,0.015,0,1,0,0]
-    rc.goto_Quant_Orient(pose_lower)
+    #pose_lower = [xC-0.08,yC+0.37,0.015,0,1,0,0]
+    rc.goto_Quant_Orient(pose_goal)
 
-    #grasp object
-    rc.send_io(1)
-    rc.attach_object()
+    # #grasp object
+    # rc.send_io(1)
+    # rc.attach_object()
 
-    #raise object
-    pose_higher = [0,0.6,.815,0,1,0,0]
-    rc.goto_Quant_Orient(pose_higher)
+    # #raise object
+    # pose_higher = [xC-0.08,-yC-0.37,.815,0,1,0,0]
+    # rc.goto_Quant_Orient(pose_higher)
 
-    #lower object
-    pose_lower = [0,0.6,0.015,0,1,0,0]
-    rc.goto_Quant_Orient(pose_lower)
+    # #lower object
+    # pose_lower = [xC-0.08,-yC-0.37,0.015,0,1,0,0]
+    # rc.goto_Quant_Orient(pose_lower)
 
-    #release object
-    rc.send_io(0)
-    rc.detach_object()
-
+    # #release object
+    # rc.send_io(0)
+    # rc.detach_object()
+    #raw_input('Return to ztart <enter>')
     #return to all zeros
-    rc.goto_all_zeros()
+    #rc.goto_all_zeros()
     
     #rc.remove_object()
 

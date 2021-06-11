@@ -212,7 +212,7 @@ class moveManipulator(object):
 
     # For testing:
     current_pose = self.move_group.get_current_pose().pose
-    return all_close(pose_goal, current_pose, 0.01)
+    #return all_close(pose_goal, current_pose, 0.01)
 
   def goto_joint_posn(self,joint_goal):
     ## Go to Joint Defined position

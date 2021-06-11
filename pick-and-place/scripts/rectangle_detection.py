@@ -6,6 +6,7 @@ import math
 import cv2
 import rospy
 from std_msgs.msg import *
+from os.path import join
 
 # Configure depth and color streams
 pipeline = rs.pipeline()
@@ -146,6 +147,12 @@ try:
             angle = math.atan2(eigenvectors[0, 1], eigenvectors[0, 0])  # orientation in radians
             return angle, cntr, mean
 
+        def write():
+            print('Creating a new file')
+            path = "/home/martinez737/ws_pick_camera/src/pick-and-place/scripts"
+            name = 'Coordinate-angle.txt'  # Name of text file coerced with +.txt
+            return name, path
+
         # Finds largest rectangular object
         def getContours(img, imgContour, minArea, filter):
             cThr = [100, 100]
@@ -267,7 +274,7 @@ try:
                     x,y,w,h = c2[0]
                     angle, cntr, mean = getOrientation(nPoints, imgCont2)
                     result_angle = int(np.rad2deg(angle)) # in deg
-                    xC = round((wP/(10*scale)) - (round(findDis((cntr[0], cntr[1]), (0, cntr[1])) / (10*scale), 3)),3)  # in cm
+                    xC = round(findDis((cntr[0], cntr[1]), (0, cntr[1])) / (10*scale), 3) # in cm
                     yC = round((hP/(10*scale)) - (round(findDis((cntr[0], cntr[1]), (cntr[0], 0)) / (10*scale), 3)+2),3)   # in cm
                     # Makes List for coordinates and angle
                     xList.append(xC)
@@ -277,7 +284,7 @@ try:
 
                     # Draws arrows and puts text on image
                     cv2.arrowedLine(imgCont2, (cntr[0], cntr[1]), (cntr[0],1000), (0, 255, 0), 2, 8, 0, 0.05)
-                    cv2.arrowedLine(imgCont2, (cntr[0],cntr[1]), (1000, cntr[1]), (0, 255,0),2,8,0,0.05)
+                    cv2.arrowedLine(imgCont2, (cntr[0],cntr[1]), (0, cntr[1]), (0, 255,0),2,8,0,0.05)
                     center = [NewWidth / 2, NewHeight / 2]
                     cv2.putText(imgCont2, '{}cm'.format(NewWidth),(x+30, y-10), cv2.FONT_HERSHEY_PLAIN, 0.75, (0,0,0),1)
                     cv2.putText(imgCont2, '{}cm'.format(NewHeight),(x-70, y+h//2), cv2.FONT_HERSHEY_PLAIN, 0.75, (0,0,0),1)
@@ -298,12 +305,22 @@ try:
                             print('Coordinate of center is (' + str(xC) + ' , ' + str(yC) + ') cm')
                             pub_angle = int(np.rad2deg(result_angle))
                             #talker()
-                            a = [xC,yC,pub_angle]
-                            np.savetxt('Coordinate-angle.txt', zip(a), fmt="%5.2f")
-                           
-
+                            a = [str(xC),str(yC),str(result_angle)]
+                            #np.savetxt('Coordinate-angle.txt', zip(a), fmt="%5.2f")
                             #file.write(str(xC)+ '/n'+str(yC)+ '/n'+str(pub_angle))
+                            name, path = write()
+                            file = open(join(path, name),'w')   # Trying to create a new file or open one
+                            file.write(a[0] +'\n' +a[1] + '\n' +a[2])
+                            file.close()
                             print('wrote to file')
+                            #with open("/home/martinez737/ws_pick_camera/Coordinate-angle.txt", "r") as f:
+                                #file_content = f.read()
+                                #fileList = file_content.splitlines()
+                                #xCNew = float(fileList[0])
+                                #yCNew = float(fileList[1])
+                                #angleNew = float(fileList[2])
+
+
                             loop=False
                             
         #camera_node()
