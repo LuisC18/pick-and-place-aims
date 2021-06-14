@@ -6,7 +6,7 @@
 
     <link name="${prefix}eef_link">
         <visual>
-            <origin xyz="0 0 0" rpy="0 -${radians(90)} 0" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
                 <mesh filename="package://schunk_pgn64_support/meshes/pgn64_closed_visual.stl"/>
             </geometry>
@@ -24,7 +24,7 @@
 
     <!-- EEF TCP Defined as the center point between EEF finger tips -->
     <joint name="${prefix}eef_link-eef_tcp" type="fixed">
-        <origin xyz="0 0 0.13" rpy="0 0 0"/>
+        <origin xyz="0 0 0.14152" rpy="0 0 0"/>
         <parent link="${prefix}eef_link"/>
         <child link="${prefix}eef_tcp"/> 
     </joint>

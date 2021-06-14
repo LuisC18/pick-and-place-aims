@@ -3,10 +3,10 @@
   <name>robot_mh5l_pgn64_table_moveit_config</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the bot_mh5l_pgn64_table with the MoveIt! Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the robot_mh5l_pgn64_table with the MoveIt! Motion Planning Framework
   </description>
-  <author email="luiscmartinez18@gmail.com">Luis Martinez</author>
-  <maintainer email="luiscmartinez18@gmail.com">Luis Martinez</maintainer>
+  <author email="acbuynak@gmail.com">acbuynak</author>
+  <maintainer email="acbuynak@gmail.com">acbuynak</maintainer>
 
   <license>BSD</license>
 
@@ -29,7 +29,7 @@
   <run_depend>xacro</run_depend>
   <!-- This package is referenced in the warehouse launch files, but does not build out of the box at the moment. Commented the dependency until this works. -->
   <!-- <run_depend>warehouse_ros_mongo</run_depend> -->
-    <run_depend>pick-and-place</run_depend>
+    <run_depend>mh5l_table</run_depend>
 
 
 </package>

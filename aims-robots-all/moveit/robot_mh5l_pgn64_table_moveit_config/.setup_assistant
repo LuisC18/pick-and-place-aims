@@ -1,11 +1,11 @@
 moveit_setup_assistant_config:
   URDF:
-    package: mh5l_pgn64_table
+    package: mh5l_table
     relative_path: urdf/mh5l_pgn64_table.xacro
     xacro_args: ""
   SRDF:
-    relative_path: config/bot_mh5l_pgn64_table.srdf
+    relative_path: config/motoman_mh5l.srdf
   CONFIG:
-    author_name: Luis Martinez
-    author_email: luiscmartinez18@gmail.com
-    generated_timestamp: 1623089489
+    author_name: acbuynak
+    author_email: acbuynak@gmail.com
+    generated_timestamp: 1618961452

@@ -274,6 +274,7 @@ try:
                     x,y,w,h = c2[0]
                     angle, cntr, mean = getOrientation(nPoints, imgCont2)
                     result_angle = int(np.rad2deg(angle)) # in deg
+                    # multiplying by negative 1 to match gripper CW(-) & CCW(+)
                     xC = round(findDis((cntr[0], cntr[1]), (0, cntr[1])) / (10*scale), 3) # in cm
                     yC = round((hP/(10*scale)) - (round(findDis((cntr[0], cntr[1]), (cntr[0], 0)) / (10*scale), 3)+2),3)   # in cm
                     # Makes List for coordinates and angle
@@ -289,6 +290,7 @@ try:
                     cv2.putText(imgCont2, '{}cm'.format(NewWidth),(x+30, y-10), cv2.FONT_HERSHEY_PLAIN, 0.75, (0,0,0),1)
                     cv2.putText(imgCont2, '{}cm'.format(NewHeight),(x-70, y+h//2), cv2.FONT_HERSHEY_PLAIN, 0.75, (0,0,0),1)
                     label = "  Rotation Angle: " + str(int(np.rad2deg(angle)) + 90) + " degrees"
+                    #
                     textbox = cv2.rectangle(imgCont2, (cntr[0], cntr[1] - 25), (cntr[0] + 250, cntr[1] + 10),
                                             (255, 255, 255), 1)
                     cv2.putText(imgCont2, label, (cntr[0], cntr[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1,

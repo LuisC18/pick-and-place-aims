@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<robot name="robot_mh5l_pgn64" xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:macro name="robot_mh5l_pgn64" params="prefix">
+
+    <!-- Robot -->
+    <xacro:include filename="$(find motoman_mh5_support)/urdf/mh5l_macro.xacro" />
+
+    <!-- EEF -->
+    <xacro:include filename="$(find schunk_pgn64_support)/urdf/pgn64_macro.xacro" />
+
+    <!-- Build Kinematic Chain using imported components -->
+    <xacro:motoman_mh5l prefix=""/>
+    <xacro:schunk_pgn64 prefix=""/>
+
+    <joint name="tool0-eef_link" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="tool0"/>
+        <child link="eef_link"/>
+    </joint>
+</xacro:macro>
+</robot>

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<robot name="robot_mh5l_pgn64" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Robot + Table -->
+    <xacro:include filename="$(find schunk_pgn64_support)/urdf/mh5l_pgn64_macro.xacro" />
+    <xacro:robot_mh5l_pgn64 prefix=""/>
+
+</robot>
